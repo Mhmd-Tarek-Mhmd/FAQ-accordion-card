@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Page Information -->
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="./images/favicon-32x32.png"
+    />
+    <title>Frontend Mentor | FAQ Accordion Card</title>
+
+    <!-- Fonts Style -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Kumbh+Sans:wght@400;700&display=swap"
+    />
+
+    <!-- Page Style -->
+    <style>
+      /* Global style */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        font: 400 12px "Kumbh Sans", sans-serif;
+        background: linear-gradient(
+          to bottom,
+          hsl(273, 75%, 66%),
+          hsl(240, 73%, 65%)
+        );
+        height: 768px;
+      }
+      img {
+        max-width: 100%;
+      }
+
+      /*
+      ** Card component
+      */
+      .card {
+        width: 327px;
+        padding: 120px 20px 48px;
+        border-radius: 25px;
+        background-color: #fff;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -30%);
+      }
+      @media (min-width: 992px) {
+        .card {
+          width: 800px;
+          height: 510px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          padding: 0 50px 0 0;
+          transform: translate(-50%, -50%);
+        }
+      }
+      @media (min-width: 1100px) {
+        .card {
+          width: 920px;
+        }
+      }
+
+      /* [1] Card Images */
+      .card-images {
+        position: relative;
+      }
+      .card-images picture,
+      img.box {
+        position: absolute;
+      }
+      .card-images .top {
+        top: -220px;
+      }
+      .card-images .base {
+        bottom: 76%;
+        left: 10%;
+      }
+      img.box {
+        display: none;
+      }
+      @media (min-width: 992px) {
+        .card-images {
+          overflow: hidden;
+          width: 55%;
+          margin-right: 20px;
+          height: 100%;
+        }
+        .card-images .top {
+          left: -70px;
+          top: 50%;
+          transform: translateY(-50%);
+        }
+        .card-images .base {
+          bottom: -150px;
+          left: -550px;
+        }
+        img.box {
+          top: 40%;
+          left: -100px;
+          display: block;
+          z-index: 1;
+        }
+      }
+
+      /* [2] Card Body */
+      .card-body {
+        flex: 1;
+      }
+      .card-body > div {
+        position: relative;
+        padding: 20px 20px 20px 0;
+        cursor: pointer;
+        border-bottom: 1px solid hsl(240, 5%, 91%);
+      }
+      .card-body h1 {
+        font-size: 30px;
+        margin: 20px 0;
+      }
+      @media (max-width: 991px) {
+        .card-body h1 {
+          text-align: center;
+        }
+      }
+
+      /* Question */
+      .card-body .question {
+        color: hsl(237, 12%, 33%);
+        font-size: 13px;
+      }
+      .card-body .question:hover {
+        color: hsl(14, 88%, 65%);
+      }
+      .card-body .question.active {
+        font-weight: 700;
+        color: hsl(238, 29%, 16%);
+        margin-bottom: 15px;
+      }
+
+      /* Answer */
+      .card-body .answer {
+        color: hsl(240, 6%, 50%);
+        display: none;
+        cursor: text;
+      }
+      .card-body .answer.show {
+        display: block;
+      }
+
+      /* Arrow */
+      .card-body img.arrow {
+        right: 0;
+        top: 50%;
+        position: absolute;
+        transform: translateY(-50%);
+      }
+      .card-body img.arrow.rotate {
+        transform: translateY(-50%) rotate(180deg);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="card">
+      <img src="images/illustration-box-desktop.svg" alt="" class="box" />
+      <div class="card-images">
+        <picture class="base">
+          <source
+            media="(min-width: 992px)"
+            srcset="images/bg-pattern-desktop.svg"
+          />
+          <source srcset="images/bg-pattern-mobile.svg" />
+          <img src="images/bg-pattern-mobile.svg" alt="" />
+        </picture>
+
+        <picture class="top">
+          <source
+            media="(min-width: 992px)"
+            srcset="images/illustration-woman-online-desktop.svg"
+          />
+          <source srcset="images/illustration-woman-online-mobile.svg" />
+          <img src="images/illustration-woman-online-mobile.svg" alt="" />
+        </picture>
+      </div>
+
+      <div class="card-body">
+        <h1>FAQ</h1>
+
+        <div>
+          <p class="question">How many team members can I invite?</p>
+          <p class="answer">
+            You can invite up to 2 additional users on the Free plan. There is
+            no limit on team members for the Premium plan.
+          </p>
+          <img
+            src="images/icon-arrow-down.svg"
+            alt="Arrow icon"
+            class="arrow"
+          />
+        </div>
+        <div>
+          <p class="question">What is the maximum file upload size?</p>
+          <p class="answer">
+            No more than 2GB. All files in your account must fit your allotted
+            storage space.
+          </p>
+          <img
+            src="images/icon-arrow-down.svg"
+            alt="Arrow icon"
+            class="arrow"
+          />
+        </div>
+        <div>
+          <p class="question">How do I reset my password?</p>
+          <p class="answer">
+            Click “Forgot password” from the login page or “Change password”
+            from your profile page. A reset link will be emailed to you.
+          </p>
+          <img
+            src="images/icon-arrow-down.svg"
+            alt="Arrow icon"
+            class="arrow"
+          />
+        </div>
+        <div>
+          <p class="question">Can I cancel my subscription?</p>
+          <p class="answer">
+            Yes! Send us a message and we’ll process your request no questions
+            asked.
+          </p>
+          <img
+            src="images/icon-arrow-down.svg"
+            alt="Arrow icon"
+            class="arrow"
+          />
+        </div>
+        <div>
+          <p class="question">Do you provide additional support?</p>
+          <p class="answer">
+            Chat and email support is available 24/7. Phone lines are open
+            during normal business hours.
+          </p>
+          <img
+            src="images/icon-arrow-down.svg"
+            alt="Arrow icon"
+            class="arrow"
+          />
+        </div>
+      </div>
+    </div>
+    <script>
+      /* Helper Functions */
+      function toggleClasses(elements = [], classNames = []) {
+        elements.forEach((ele, i) => ele.classList.toggle(classNames[i]));
+      }
+
+      document.querySelectorAll(".card .card-body > div").forEach((ele, i) => {
+        ele.addEventListener("click", (e) => {
+          const classNames = ["active", "show", "rotate"];
+          const elements = [
+            document.querySelectorAll(".card .question")[i],
+            document.querySelectorAll(".card .answer")[i],
+            document.querySelectorAll(".card .arrow")[i],
+          ];
+
+          toggleClasses(elements, classNames);
+        });
+      });
+    </script>
+  </body>
+</html>
