@@ -1,280 +1,291 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <!-- Page Information -->
     <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link
-      rel="icon"
-      type="image/png"
-      sizes="32x32"
-      href="./images/favicon-32x32.png"
-    />
-    <title>Frontend Mentor | FAQ Accordion Card</title>
-
-    <!-- Fonts Style -->
+    <title>FAQ Accordion Card</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       rel="stylesheet"
       href="https://fonts.googleapis.com/css2?family=Kumbh+Sans:wght@400;700&display=swap"
     />
-
-    <!-- Page Style -->
     <style>
-      /* Global style */
       * {
         margin: 0;
         padding: 0;
         box-sizing: border-box;
       }
-      body {
-        font: 400 12px "Kumbh Sans", sans-serif;
+      main {
+        min-height: 100vh;
+        font: 400 12px/1.5 "Kumbh Sans", sans-serif;
         background: linear-gradient(
           to bottom,
           hsl(273, 75%, 66%),
           hsl(240, 73%, 65%)
         );
-        height: 768px;
       }
-      img {
-        max-width: 100%;
-      }
-
-      /*
-      ** Card component
-      */
       .card {
-        width: 327px;
-        padding: 120px 20px 48px;
-        border-radius: 25px;
+        display: grid;
+        border-radius: 20px;
         background-color: #fff;
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -30%);
       }
-      @media (min-width: 992px) {
+      .accordion h1 {
+        font-size: 2.7em;
+        color: hsl(238, 29%, 16%);
+      }
+      @media (max-width: 767px) {
+        main {
+          padding: 150px 24px 85px;
+        }
         .card {
-          width: 800px;
-          height: 510px;
+          margin: 0 auto;
+          max-width: 327px;
+          grid-template-rows: 140px minmax(400px, 1fr);
+        }
+        .accordion {
+          padding: 0 24px;
+        }
+        .accordion h1 {
+          text-align: center;
+          margin-bottom: 6px;
+        }
+      }
+      @media (min-width: 768px) {
+        main {
           display: flex;
-          justify-content: center;
+          padding: 0 24px;
           align-items: center;
-          padding: 0 50px 0 0;
-          transform: translate(-50%, -50%);
+          justify-content: center;
+        }
+        .wrapper {
+          max-width: 960px;
+          position: relative;
+        }
+        .card {
+          margin-left: auto;
+          width: calc(100% - 40px);
+          grid-template-rows: 510px;
+          grid-template-columns: minmax(0, 475px) minmax(0, 445px);
+        }
+        .accordion {
+          max-width: 350px;
+          align-self: center;
+          padding-right: 24px;
+        }
+        .accordion h1 {
+          margin-bottom: 11px;
         }
       }
-      @media (min-width: 1100px) {
-        .card {
-          width: 920px;
+      @media (min-width: 768px) and (max-height: 540px) {
+        main {
+          padding: 50px 24px;
         }
       }
 
-      /* [1] Card Images */
-      .card-images {
-        position: relative;
+      /* 
+        Images
+      */
+
+      @media (max-width: 767px) {
+        .bg {
+          top: -107px;
+          height: 210px;
+          position: relative;
+          background: url(images/illustration-woman-online-mobile.svg) no-repeat
+              top center / 72.5%,
+            url(images/bg-pattern-mobile.svg) no-repeat 50% bottom / 75%;
+        }
+        .box {
+          display: none;
+        }
       }
-      .card-images picture,
-      img.box {
-        position: absolute;
-      }
-      .card-images .top {
-        top: -220px;
-      }
-      .card-images .base {
-        bottom: 76%;
-        left: 10%;
-      }
-      img.box {
-        display: none;
+      @media (min-width: 768px) {
+        .bg {
+          background: url(images/illustration-woman-online-desktop.svg)
+              no-repeat center left -70px / 400px,
+            url(images/bg-pattern-desktop.svg) no-repeat bottom 35px left -70px /
+              400px;
+        }
+        .box {
+          top: 40%;
+          left: -51px;
+          position: absolute;
+        }
       }
       @media (min-width: 992px) {
-        .card-images {
-          overflow: hidden;
-          width: 55%;
-          margin-right: 20px;
-          height: 100%;
+        .bg {
+          background-size: 100%, 210%;
+          background-position: center left -70px, bottom -120px left 115%;
         }
-        .card-images .top {
-          left: -70px;
-          top: 50%;
-          transform: translateY(-50%);
+      }
+      @media (min-width: 768px) and (max-width: 992px) {
+        .card {
+          gap: 15px;
         }
-        .card-images .base {
-          bottom: -150px;
-          left: -550px;
-        }
-        img.box {
-          top: 40%;
-          left: -100px;
-          display: block;
-          z-index: 1;
+        .box {
+          width: 170px;
         }
       }
 
-      /* [2] Card Body */
-      .card-body {
-        flex: 1;
-      }
-      .card-body > div {
-        position: relative;
-        padding: 20px 20px 20px 0;
-        cursor: pointer;
+      /* 
+        Txt
+      */
+
+      article {
+        padding: 15px 0;
+        height: -moz-fit-content;
+        height: fit-content;
         border-bottom: 1px solid hsl(240, 5%, 91%);
       }
-      .card-body h1 {
-        font-size: 30px;
-        margin: 20px 0;
+      article .toggler {
+        display: flex;
+        cursor: pointer;
+        align-items: center;
+        justify-content: space-between;
       }
-      @media (max-width: 991px) {
-        .card-body h1 {
-          text-align: center;
-        }
-      }
-
-      /* Question */
-      .card-body .question {
+      article .question {
+        font-weight: 400;
         color: hsl(237, 12%, 33%);
-        font-size: 13px;
       }
-      .card-body .question:hover {
+      article .toggler:hover .question {
         color: hsl(14, 88%, 65%);
       }
-      .card-body .question.active {
+      article.opened .question {
         font-weight: 700;
         color: hsl(238, 29%, 16%);
-        margin-bottom: 15px;
       }
-
-      /* Answer */
-      .card-body .answer {
-        color: hsl(240, 6%, 50%);
+      article .icon {
+        border: none;
+        background: none;
+      }
+      article.opened .icon {
+        transform: rotate(180deg);
+      }
+      article .answer {
         display: none;
-        cursor: text;
+        margin-top: 9px;
+        will-change: display;
+        color: hsl(240, 6%, 50%);
       }
-      .card-body .answer.show {
+      article.opened .answer {
         display: block;
-      }
-
-      /* Arrow */
-      .card-body img.arrow {
-        right: 0;
-        top: 50%;
-        position: absolute;
-        transform: translateY(-50%);
-      }
-      .card-body img.arrow.rotate {
-        transform: translateY(-50%) rotate(180deg);
       }
     </style>
   </head>
   <body>
-    <div class="card">
-      <img src="images/illustration-box-desktop.svg" alt="" class="box" />
-      <div class="card-images">
-        <picture class="base">
-          <source
-            media="(min-width: 992px)"
-            srcset="images/bg-pattern-desktop.svg"
-          />
-          <source srcset="images/bg-pattern-mobile.svg" />
-          <img src="images/bg-pattern-mobile.svg" alt="" />
-        </picture>
+    <main>
+      <div class="wrapper">
+        <div class="card">
+          <div class="bg">
+            <img src="images/illustration-box-desktop.svg" alt="" class="box" />
+          </div>
 
-        <picture class="top">
-          <source
-            media="(min-width: 992px)"
-            srcset="images/illustration-woman-online-desktop.svg"
-          />
-          <source srcset="images/illustration-woman-online-mobile.svg" />
-          <img src="images/illustration-woman-online-mobile.svg" alt="" />
-        </picture>
-      </div>
-
-      <div class="card-body">
-        <h1>FAQ</h1>
-
-        <div>
-          <p class="question">How many team members can I invite?</p>
-          <p class="answer">
-            You can invite up to 2 additional users on the Free plan. There is
-            no limit on team members for the Premium plan.
-          </p>
-          <img
-            src="images/icon-arrow-down.svg"
-            alt="Arrow icon"
-            class="arrow"
-          />
-        </div>
-        <div>
-          <p class="question">What is the maximum file upload size?</p>
-          <p class="answer">
-            No more than 2GB. All files in your account must fit your allotted
-            storage space.
-          </p>
-          <img
-            src="images/icon-arrow-down.svg"
-            alt="Arrow icon"
-            class="arrow"
-          />
-        </div>
-        <div>
-          <p class="question">How do I reset my password?</p>
-          <p class="answer">
-            Click “Forgot password” from the login page or “Change password”
-            from your profile page. A reset link will be emailed to you.
-          </p>
-          <img
-            src="images/icon-arrow-down.svg"
-            alt="Arrow icon"
-            class="arrow"
-          />
-        </div>
-        <div>
-          <p class="question">Can I cancel my subscription?</p>
-          <p class="answer">
-            Yes! Send us a message and we’ll process your request no questions
-            asked.
-          </p>
-          <img
-            src="images/icon-arrow-down.svg"
-            alt="Arrow icon"
-            class="arrow"
-          />
-        </div>
-        <div>
-          <p class="question">Do you provide additional support?</p>
-          <p class="answer">
-            Chat and email support is available 24/7. Phone lines are open
-            during normal business hours.
-          </p>
-          <img
-            src="images/icon-arrow-down.svg"
-            alt="Arrow icon"
-            class="arrow"
-          />
+          <div class="accordion">
+            <h1>FAQ</h1>
+          </div>
         </div>
       </div>
-    </div>
+    </main>
+
     <script>
-      /* Helper Functions */
-      function toggleClasses(elements = [], classNames = []) {
-        elements.forEach((ele, i) => ele.classList.toggle(classNames[i]));
-      }
+      const $ = document.querySelector.bind(document);
 
-      document.querySelectorAll(".card .card-body > div").forEach((ele, i) => {
-        ele.addEventListener("click", (e) => {
-          const classNames = ["active", "show", "rotate"];
-          const elements = [
-            document.querySelectorAll(".card .question")[i],
-            document.querySelectorAll(".card .answer")[i],
-            document.querySelectorAll(".card .arrow")[i],
-          ];
+      (function () {
+        const Modal = {
+          data: [
+            {
+              question: "How many team members can I invite?",
+              answer:
+                "You can invite up to 2 additional users on the Free plan. There is no limit on team members for the Premium plan.",
+            },
+            {
+              question: "What is the maximum file upload size?",
+              answer:
+                "No more than 2GB. All files in your account must fit your allotted storage space.",
+            },
+            {
+              question: "How do I reset my password?",
+              answer:
+                "Click “Forgot password” from the login page or “Change password” from your profile page. A reset link will be emailed to you.",
+            },
+            {
+              question: "Can I cancel my subscription?",
+              answer:
+                "Yes! Send us a message and we’ll process your request no questions asked.",
+            },
+            {
+              question: "Do you provide additional support?",
+              answer:
+                "Chat and email support is available 24/7. Phone lines are open during normal business hours.",
+            },
+          ],
+        };
 
-          toggleClasses(elements, classNames);
-        });
-      });
+        const Controller = {
+          getData: () => Modal.data,
+
+          init: function () {
+            Views.init();
+          },
+        };
+
+        const Views = {
+          init: function () {
+            const data = Controller.getData();
+            const { template, toggleAnswer } = this.render;
+            const accordion = $(".accordion");
+
+            data.forEach(
+              (a) => (accordion.innerHTML += template(a.question, a.answer))
+            );
+
+            accordion.addEventListener("click", (e) => {
+              e.target.className === "toggler" &&
+                toggleAnswer(e.target.parentElement);
+
+              (e.target.className === "icon" ||
+                e.target.className === "question") &&
+                toggleAnswer(e.target.parentElement.parentElement);
+            });
+          },
+
+          render: {
+            template: (question, answer) => `
+          <article>
+            <div class='toggler'>
+              <h3 class='question'>${question}</h3>
+              <button
+                class='icon'
+                aria-label='Show answer'
+              >
+                <img
+                  src="images/icon-arrow-down.svg"
+                  alt=""
+                  style='pointer-events:none'
+                />
+              </button>
+            </div>
+            <p class='answer'>${answer}</p>
+          </article>
+        `,
+            toggleAnswer: (parentEle) => {
+              let activeEl = $(".opened");
+              parentEle.classList.toggle("opened");
+              activeEl && activeEl.classList.remove("opened");
+
+              if ($(".opened")) {
+                $(".opened .icon").ariaLabel = "Hide answer";
+              } else {
+                $(".icon[aria-label='Hide answer']").ariaLabel = "Show answer";
+              }
+            },
+          },
+        };
+
+        Controller.init();
+      })();
     </script>
   </body>
 </html>
