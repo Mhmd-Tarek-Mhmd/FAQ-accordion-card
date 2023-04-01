@@ -12,6 +12,7 @@
       href="https://fonts.googleapis.com/css2?family=Kumbh+Sans:wght@400;700&display=swap"
     />
     <style>
+      /* Global styles */
       * {
         margin: 0;
         padding: 0;
@@ -26,6 +27,14 @@
           hsl(240, 73%, 65%)
         );
       }
+      button {
+        border: none;
+        font: inherit;
+        color: inherit;
+        background: none;
+      }
+
+      /* Card styles */
       .card {
         display: grid;
         border-radius: 20px;
@@ -140,27 +149,29 @@
         border-bottom: 1px solid hsl(240, 5%, 91%);
       }
       article .toggler {
+        width: 100%;
         display: flex;
         cursor: pointer;
-        align-items: center;
+        align-items: baseline;
         justify-content: space-between;
       }
       article .question {
+        flex: 1;
+        text-align: left;
         font-weight: 400;
         color: hsl(237, 12%, 33%);
       }
       article .toggler:hover .question {
         color: hsl(14, 88%, 65%);
       }
-      article.opened .question {
+      [aria-expanded="true"] .question {
         font-weight: 700;
         color: hsl(238, 29%, 16%);
       }
       article .icon {
-        border: none;
-        background: none;
+        pointer-events: none;
       }
-      article.opened .icon {
+      [aria-expanded="true"] .icon {
         transform: rotate(180deg);
       }
       article .answer {
@@ -178,7 +189,7 @@
     <main>
       <div class="wrapper">
         <div class="card">
-          <div class="bg">
+          <div aria-hidden="true" class="bg">
             <img src="images/illustration-box-desktop.svg" alt="" class="box" />
           </div>
 
@@ -190,9 +201,10 @@
     </main>
 
     <script>
-      const $ = document.querySelector.bind(document);
-
       (function () {
+        const $ = document.querySelector.bind(document);
+        const $$ = document.querySelectorAll.bind(document);
+
         const Modal = {
           data: [
             {
@@ -238,47 +250,54 @@
             const accordion = $(".accordion");
 
             data.forEach(
-              (a) => (accordion.innerHTML += template(a.question, a.answer))
+              (a, i) =>
+                (accordion.innerHTML += template(i, a.question, a.answer))
             );
 
-            accordion.addEventListener("click", (e) => {
-              e.target.className === "toggler" &&
-                toggleAnswer(e.target.parentElement);
-
-              (e.target.className === "icon" ||
-                e.target.className === "question") &&
-                toggleAnswer(e.target.parentElement.parentElement);
+            $$(".toggler").forEach((ele) => {
+              ele.addEventListener("click", toggleAnswer);
             });
           },
 
           render: {
-            template: (question, answer) => `
-          <article>
-            <div class='toggler'>
-              <h3 class='question'>${question}</h3>
-              <button
-                class='icon'
-                aria-label='Show answer'
-              >
-                <img
-                  src="images/icon-arrow-down.svg"
-                  alt=""
-                  style='pointer-events:none'
-                />
-              </button>
-            </div>
-            <p class='answer'>${answer}</p>
-          </article>
-        `,
-            toggleAnswer: (parentEle) => {
-              let activeEl = $(".opened");
-              parentEle.classList.toggle("opened");
-              activeEl && activeEl.classList.remove("opened");
+            template: (i, question, answer) => `
+              <article>
+                <h2>
+                  <button
+                    type="button"
+                    aria-expanded="false"
+                    aria-controls="ans${i}"
+                    class='toggler'
+                  >
+                    <span class='question'>${question}</span>
+                    <img
+                      aria-hidden="true"
+                      src="images/icon-arrow-down.svg"
+                      alt=""
+                      class='icon'
+                    />
+                  </button>
+                </h2>
+                <p id="ans${i}" class='answer'>${answer}</p>
+              </article>
+            `,
+            toggleAnswer: (e) => {
+              const parent = e.currentTarget.parentElement.parentElement;
 
-              if ($(".opened")) {
-                $(".opened .icon").ariaLabel = "Hide answer";
+              if (e.currentTarget.ariaExpanded === "true") {
+                parent.classList.remove("opened");
+                e.currentTarget.ariaExpanded = "false";
               } else {
-                $(".icon[aria-label='Hide answer']").ariaLabel = "Show answer";
+                const activeEl = $("[aria-expanded='true']");
+                if (activeEl) {
+                  activeEl.parentElement.parentElement.classList.remove(
+                    "opened"
+                  );
+                  activeEl.ariaExpanded = "false";
+                }
+
+                parent.classList.add("opened");
+                e.currentTarget.ariaExpanded = "true";
               }
             },
           },
